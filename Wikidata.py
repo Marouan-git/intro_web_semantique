@@ -72,31 +72,6 @@ with open(filename, encoding='utf-8') as json_file:
     file.close()
 
 
-url = 'https://query.wikidata.org/sparql'
-query = '''
-SELECT DISTINCT ?item ?label
-WHERE
-{
-  SERVICE wikibase:mwapi
-  {
-    bd:serviceParam wikibase:endpoint "www.wikidata.org";
-                    wikibase:api "Generator";
-                    mwapi:generator "search";
-                    mwapi:gsrsearch "inlabel:Morocco"@en;
-                    mwapi:gsrlimit "max".
-    ?item wikibase:apiOutputItem mwapi:title.
-  }
-  ?item rdfs:label ?label. FILTER( LANG(?label)="en" )
 
-}
-'''
-r = requests.get(url, params = {'format': 'json', 'query': query})
-data = r.json()
-file = open("results.txt", "w")
-for i in data:
-        uri = i
-        file.write(uri) 
-        file.write("\n")
-file.close()
 
 
